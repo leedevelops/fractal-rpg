@@ -1,0 +1,16 @@
+
+:root{color-scheme:dark light}
+*{box-sizing:border-box}
+html,body,#root{height:100%}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;background:#0b0d10;color:#e7e9ee}
+a{color:#8ad}
+button{font:inherit;padding:.75rem 1rem;border-radius:.75rem;border:1px solid #334; background:#121620;color:#e7e9ee}
+button:active{transform:scale(0.98)}
+.container{max-width:960px;margin:0 auto;padding:1rem}
+.hud{position:fixed;top:env(safe-area-inset-top);left:0;right:0;display:flex;justify-content:space-between;padding:.5rem 1rem;pointer-events:none}
+.pad{position:fixed;bottom:calc(1rem + env(safe-area-inset-bottom));left:1rem;width:120px;height:120px;border:1px solid #334;border-radius:50%;touch-action:none}
+.action{position:fixed;bottom:calc(2rem + env(safe-area-inset-bottom));right:1.25rem;width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:1px solid #334;background:#1b2230}
+.grid{display:grid;gap:.75rem}
+.card{border:1px solid #2a3140;border-radius:1rem;padding:1rem;background:#0f131b}
+.list{list-style:none;padding:0;margin:0}
+.badge{padding:.2rem .5rem;border:1px solid #334;border-radius:.5rem;background:#151a24;color:#9ac}
