@@ -1,8 +1,10 @@
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { FRACTAL_MATRIX } from '../content/fractalMatrix'
 import { Gates, gateKeyFromGeometry } from '../game/gates'
 import Placeholder from './gateParts/Placeholder'
+import AltarPuzzle from './gateParts/AltarPuzzle'
+import ShofarPuzzle from './gateParts/ShofarPuzzle'
 import { useGameStore } from '../store/gameStore'
 
 export default function GateScene(){
@@ -17,10 +19,10 @@ export default function GateScene(){
   const factory = key==='Placeholder'? null : Gates[key]
   const gate = useMemo(()=> factory? factory({}): null, [factory])
 
-  React.useEffect(()=>{ gate?.start() }, [gate])
+  useEffect(()=>{ gate?.start() }, [gate])
 
-  function onInteract(type: string){
-    gate?.interact({type})
+  function onInteract(event: { type: string; data?: any }){
+    gate?.interact(event)
     const s = gate?.status()
     setProgress(s? s.progress : 0)
   }
@@ -41,16 +43,30 @@ export default function GateScene(){
         <h2>Gate: {key==='Placeholder'?'Practice':gate?.title}</h2>
         <p>{row.chapterTitle}</p>
         {key==='Placeholder' && <Placeholder onDone={onComplete} />}
-        {key!=='Placeholder' && (
+        {key==='IdentityMirror' && chapterId === 1 && (
+          <AltarPuzzle 
+            gateStatus={gate?.status()} 
+            onInteract={onInteract}
+            onComplete={onComplete}
+          />
+        )}
+        {key==='ShofarConvergence' && chapterId === 25 && (
+          <ShofarPuzzle 
+            gateStatus={gate?.status()} 
+            onInteract={onInteract}
+            onComplete={onComplete}
+          />
+        )}
+        {key!=='Placeholder' && key!=='IdentityMirror' && key!=='ShofarConvergence' && (
           <div style={{display:'grid', gap:'.5rem', marginTop:'.5rem'}}>
             <div className='badge'>Progress: {(progress*100).toFixed(0)}%</div>
             <div style={{display:'flex', gap:'.5rem', flexWrap:'wrap'}}>
-              <button onClick={()=>onInteract('flip')}>Flip</button>
-              <button onClick={()=>onInteract('call')}>Call</button>
-              <button onClick={()=>onInteract('respond')}>Respond</button>
-              <button onClick={()=>onInteract('send')}>Send</button>
-              <button onClick={()=>onInteract('link')}>Link</button>
-              <button onClick={()=>onInteract('place')}>Place</button>
+              <button onClick={()=>onInteract({type:'flip'})}>Flip</button>
+              <button onClick={()=>onInteract({type:'call'})}>Call</button>
+              <button onClick={()=>onInteract({type:'respond'})}>Respond</button>
+              <button onClick={()=>onInteract({type:'send'})}>Send</button>
+              <button onClick={()=>onInteract({type:'link'})}>Link</button>
+              <button onClick={()=>onInteract({type:'place'})}>Place</button>
             </div>
             <button onClick={onComplete}>Complete Gate</button>
           </div>

@@ -5,7 +5,7 @@ export interface IFractalGate {
   title: string
   describe(): string
   start(options?: Record<string, unknown>): void
-  interact(event: { type: string; data?: unknown }): void
+  interact(event: { type: string; data?: unknown; payload?: Record<string, unknown> }): void
   status(): { phase: string; progress: number }
   complete(): GateResult
 }

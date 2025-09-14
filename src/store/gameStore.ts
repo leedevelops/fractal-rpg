@@ -80,9 +80,7 @@ export const useGameStore = create<GameState>((set, get) => ({
 }))
 
 export function nextChapterId(id: number){
-  // Golden Path: 1 -> 5 -> 10 -> 15 -> 20 -> 25 -> 26 -> 27
-  const path = [1,5,10,15,20,25,26,27]
-  const idx = path.indexOf(id)
-  if(idx>=0 && idx<path.length-1) return path[idx+1]
-  return id
+  // Sequential progression through all 27 chapters
+  if(id < 27) return id + 1
+  return 27 // Stay at final chapter
 }
